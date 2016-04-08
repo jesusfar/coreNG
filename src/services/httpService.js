@@ -13,21 +13,19 @@
  */
 (function (){
     var coreNGService = angular.module('coreNGService');
-    
+
     coreNGService.service('httpService', ['$http', 'loggerService', function ($http, loggerService){
         return {
             sendRequest : function (method, url, data, headers, callback) {
                 
-                loggerService.debug('httpService->sendRequest() Starting...');
-                loggerService.debug('httpService->sendRequest() Sending request to url: ' + url);
+                loggerService.debug('[httpService][sendRequest] Sending request to url: ' + url);
                                 
                 $http({
                         method  : method,
                         url     : url,
                         data    : data,
                         headers : {
-                            //'Content-Type-Version' : infoUrl.headers.contentTypeVersion.value,
-                          // 'RestrictedUri'        : headers.RestrictedUri
+                            'Content-Type' : 'application/json',
                         }
                 })
                 .success(function(data, status, headers, config){
@@ -39,7 +37,7 @@
                         configResponse  : config
                     };
 
-                    loggerService.debug('httpService->sendRequest() Success! dataResponse :');
+                    loggerService.debug('[httpService][sendRequest] Success! dataResponse :');
                     loggerService.debug(result);
                     
                     callback(null, result);
@@ -52,7 +50,7 @@
                         configResponse  : config
                     };
 
-                    loggerService.debug('httpService->sendRequest() Error! dataResponse :');
+                    loggerService.debug('[httpService][sendRequest] Error! dataResponse :');
                     loggerService.debug(result);
 
                     callback(result, null);
